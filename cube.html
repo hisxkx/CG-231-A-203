@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script type="module">
+			import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+            // Light
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            var spotLight0 = new THREE.SpotLight(0xcccccc);
+            spotLight0.position.set(-40, 30, -10);
+            spotLight0.lookAt(4,0,0);
+            scene.add(spotLight0);
+            var spotLight2 = new THREE.SpotLight(0xcccccc);
+            spotLight2.position.set(-40, 30, -10);
+            spotLight2.lookAt(-4,0,0);
+            scene.add(spotLight0);
+ 
+			const geo1 = new THREE.BoxGeometry( 0.6, 0.6, 0.6 );
+			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+            const material2 = new THREE.MeshLambertMaterial(); 
+            const material3 = new THREE.MeshMatcapMaterial();          
+			const cube1 = new THREE.Mesh( geo1, material2 );
+            const cube2 = new THREE.Mesh( geo1, material );
+            const cube3 = new THREE.Mesh( geo1, material3 );
+			scene.add( cube1 ); //By default, scene.add() add the thing to the coordinates (0,0,0)
+            scene.add( cube2 ); //By default, scene.add() add the thing to the coordinates (0,0,0)
+            scene.add( cube3 ); //By default, scene.add() add the thing to the coordinates (0,0,0)
+            cube3.position.x = 4;
+            cube1.position.x = -4;
+			camera.position.z = 5;
+
+			function animate() {
+				requestAnimationFrame( animate );
+				cube1.rotation.x += 0.01;
+				cube1.rotation.y += 0.01;
+                cube2.rotation.x += 0.01;
+				cube2.rotation.y += 0.01;
+                cube3.rotation.x += 0.01;
+				cube3.rotation.y += 0.01;
+				renderer.render( scene, camera );
+			}
+
+			animate();
+		</script>
+	</body>
+</html>
